@@ -1,5 +1,6 @@
 package com.sapient.credit.card.exercise.model;
 
+import com.sapient.credit.card.exercise.validator.EnsureLuhn;
 import com.sapient.credit.card.exercise.validator.EnsureNumber;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -20,6 +20,7 @@ public class CreditCard {
     @Id
     @Size(min = 12, max = 19, message = "Card number length should be between 12 to 19")
     @EnsureNumber(message = "Card number must be numeric only")
+    @EnsureLuhn(message = "Card number must be Luhn 10 compliant")
     @Column(name="card_number")
     private String cardNumber;
 
@@ -28,16 +29,16 @@ public class CreditCard {
     private String name;
 
     @Column(name="credit_limit")
-    private Double creditLimit;
+    private double creditLimit = 0.0;
 
     @Column(name="balance")
-    private Double balance;
+    private double balance = 0.0;
 
-    public CreditCard(String name, String cardNumber, Double creditLimit) {
+    public CreditCard(String name, String cardNumber, double creditLimit) {
         this(name, cardNumber, creditLimit, creditLimit);
     }
 
-    public CreditCard(String name, String cardNumber, Double creditLimit, Double balance) {
+    public CreditCard(String name, String cardNumber, double creditLimit, double balance) {
         this.name = name;
         this.cardNumber = cardNumber;
         this.creditLimit = creditLimit;

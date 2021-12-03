@@ -1,6 +1,5 @@
 package com.sapient.credit.card.exercise.validator;
 
-import com.sapient.credit.card.exercise.model.CreditCard;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,48 +9,47 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
-public class LuhnCardValidatorTest {
+public class EnsureLuhnValidatorTest {
 
-    LuhnCardValidator validator = null;
+    EnsureLuhnValidator validator = null;
 
     @Before
     public void init() {
-        validator = new LuhnCardValidator();
+        validator = new EnsureLuhnValidator();
     }
 
     @Test
     public void testValidCardNumber_16digit() {
-        CreditCard card = new CreditCard();
-        card.setCardNumber("1358954993914435");
 
-        boolean isValid = validator.validCard(card);
+        boolean isValid = validator.isValid("1358954993914435", null);
         assertTrue("Card should be valid", isValid);
     }
 
     @Test
     public void testInvalidCardNumber_16digit() {
-        CreditCard card = new CreditCard();
-        card.setCardNumber("1358954993914434");
 
-        boolean isValid = validator.validCard(card);
+        boolean isValid = validator.isValid("1358954993914434", null);
         assertFalse("Card number should NOT be valid", isValid);
     }
 
     @Test
     public void testValidCardNumber_19digit(){
-        CreditCard card = new CreditCard();
-        card.setCardNumber("6011008785309789336");
 
-        boolean isValid = validator.validCard(card);
+        boolean isValid = validator.isValid("6011008785309789336", null);
         assertTrue("Card number should be valid", isValid);
     }
 
     @Test
     public void testInValidCardNumber_19digit(){
-        CreditCard card = new CreditCard();
-        card.setCardNumber("6011008785309789331");
 
-        boolean isValid = validator.validCard(card);
+        boolean isValid = validator.isValid("6011008785309789331", null);;
         assertFalse("Card number should NOT be valid", isValid);
     }
+
+    @Test
+    public void tesInvalidNumberFormat(){
+        boolean isValid = validator.isValid("601100878530e789331", null);;
+        assertFalse("Card number should NOT be valid", isValid);
+    }
+
 }

@@ -1,4 +1,4 @@
-Product Catalogue
+Credit Card Exercise
 -----------------
 
 Start

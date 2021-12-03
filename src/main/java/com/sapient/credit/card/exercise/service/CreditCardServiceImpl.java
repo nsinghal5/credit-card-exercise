@@ -16,8 +16,6 @@ public class CreditCardServiceImpl implements CreditCardService{
 
     @Override
     public ServiceResponse createCreditCard(CreditCard card) {
-        //[TODO]: Add Luhn Validation
-        //[TODO]: Handle Database Exceptions
         CreditCard res = repository.save(card);
         ServiceResponse resp = new ServiceResponse(Status.SUCCESS);
         return resp;
