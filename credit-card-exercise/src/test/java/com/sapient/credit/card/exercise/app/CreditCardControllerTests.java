@@ -153,7 +153,7 @@ public class CreditCardControllerTests {
     @Test
     public void getAll_InternalServerError_Test() throws Exception {
         //Test total catch
-        when(mockCreditCardService.getAllCreditCards()).thenThrow(new RuntimeException());
+        when(mockCreditCardService.getAllCreditCards()).thenThrow(new RuntimeException("Run time exception to test total catch"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(CREDIT_CARD_BASE_URL)
                 .accept(MediaType.APPLICATION_JSON))
