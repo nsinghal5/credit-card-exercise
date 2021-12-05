@@ -1,6 +1,8 @@
 package com.sapient.credit.card.exercise.exception;
 
 import com.sapient.credit.card.exercise.model.ErrorDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,9 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class CreditCardExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CreditCardExceptionHandler.class);
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatus status,
@@ -24,6 +29,8 @@ public class CreditCardExceptionHandler extends ResponseEntityExceptionHandler {
 
         List<String> errors = ex.getBindingResult().getAllErrors().
                 stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
+
+        LOG.error("Method Argument Invalid exception: {}", ex.getMessage());
 
         ErrorDetails errorDetails = new ErrorDetails(new Date(), "Validation Failed",
                errors);
@@ -40,6 +47,10 @@ public class CreditCardExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     protected ResponseEntity<Object> handleAllUncaughtException(RuntimeException exception,
                                                                 WebRequest request) {
+
+        //Log the error stack trace
+        LOG.error("Run time exception received {}", exception.getMessage(), exception);
+
         ErrorDetails errorDetails = new ErrorDetails(new Date(), "Internal Server Error",
                 Arrays.asList(exception.getMessage()));
 

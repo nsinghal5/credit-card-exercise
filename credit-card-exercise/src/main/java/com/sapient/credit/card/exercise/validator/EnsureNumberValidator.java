@@ -17,7 +17,7 @@ public class EnsureNumberValidator implements ConstraintValidator<EnsureNumber, 
             return false;
         }
 
-        String regex = ensureNumber.decimal() ? "-?[0-9][0-9\\.\\,]*" : "-?[0-9]+";
+        String regex = "-?[0-9]+";
         String data = String.valueOf(value);
         return data.matches(regex);
     }

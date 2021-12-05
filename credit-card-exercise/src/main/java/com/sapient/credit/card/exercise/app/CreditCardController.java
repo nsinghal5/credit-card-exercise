@@ -18,24 +18,28 @@ import java.util.List;
 @RequestMapping("/api/v1/credit-card")
 public class CreditCardController {
 
-    Logger logger = LoggerFactory.getLogger(CreditCardController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CreditCardController.class);
+
+    private CreditCardService service;
 
     @Autowired
-    private CreditCardService service;
+    public CreditCardController(CreditCardService service){
+        this.service = service;
+    }
 
     @PostMapping
     public ResponseEntity<ServiceResponse> createCreditCard(@Valid @RequestBody CreditCard card){
-        logger.info("Credit Card add request {}", card);
+        LOG.info("Credit Card add request {}", card);
         ServiceResponse response = service.createCreditCard(card);
-        logger.info("Credit Card add request completed {}", card);
+        LOG.info("Credit Card add request completed {}", card);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<CreditCard>> getAll(){
-        logger.info("Get all Credit card request received");
+        LOG.info("Get all Credit card request received");
         List<CreditCard> cards = service.getAllCreditCards();
-        logger.info("Get all Credit card request completed");
+        LOG.info("Get all Credit card request completed");
         return new ResponseEntity<>(cards, HttpStatus.OK);
     }
 }
