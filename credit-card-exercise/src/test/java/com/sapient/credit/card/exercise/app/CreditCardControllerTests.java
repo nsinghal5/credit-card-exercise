@@ -38,7 +38,6 @@ public class CreditCardControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @InjectMocks
     private CreditCardController controller;
 
     @MockBean
