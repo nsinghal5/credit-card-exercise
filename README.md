@@ -2,11 +2,13 @@ Credit Card Exercise
 --------------------
 
 Prerequisites
+-------------
 	1. npm
 	2. node
 	3. maven
 	
 Install
+-------
 	npm install
 	maven - https://maven.apache.org/download.cgi
 	
