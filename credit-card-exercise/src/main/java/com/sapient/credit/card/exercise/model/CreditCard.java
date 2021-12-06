@@ -5,11 +5,9 @@ import com.sapient.credit.card.exercise.validator.EnsureNumber;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -18,10 +16,14 @@ import javax.validation.constraints.Size;
 @Table(name = "credit_card")
 public class CreditCard {
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
+
     @Size(min = 12, max = 19, message = "Card number length should be between 12 to 19")
     @EnsureNumber(message = "Card number must be numeric only")
     @EnsureLuhn(message = "Card number must be Luhn 10 compliant")
-    @Column(name="card_number")
+    @Column(name="card_number", unique = true)
     private String cardNumber;
 
     @NotEmpty(message = "Name must NOT be empty")
@@ -48,8 +50,9 @@ public class CreditCard {
     @Override
     public String toString() {
         return "CreditCard{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
+                ", name='" + name + '\'' +
                 ", creditLimit=" + creditLimit +
                 ", balance=" + balance +
                 '}';
