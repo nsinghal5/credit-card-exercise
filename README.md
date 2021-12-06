@@ -29,7 +29,7 @@ References
 
 Postman Collection:
 ------------------
-Refer git file-  Credit Card.postman_collection.json
+Refer File:  Credit Card.postman_collection.json
     
 Database Login:
 --------------
