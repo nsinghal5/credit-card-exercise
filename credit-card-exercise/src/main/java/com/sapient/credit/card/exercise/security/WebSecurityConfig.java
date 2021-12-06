@@ -24,12 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }
         ).and().csrf().disable()// disable csrf validation
                 .authorizeRequests()
-                .antMatchers().permitAll() // provide urls to be protected along with roles - hasAuthroity
+                .antMatchers("/h2-console/**").permitAll() // provide urls to be protected along with roles - hasAuthroity
                                             // hasRoles() or hasAnyAuthority()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-
-        ;
+                .httpBasic();
+        http.headers().frameOptions().disable();
     }
 }
